@@ -1,0 +1,22 @@
+import csv
+import json
+
+# Paths to the input CSV and output JSON
+input_file = 'us-state-capitals 1.csv'
+output_file = 'state_capitals.json'
+
+data = []
+with open(input_file, newline='', encoding='utf-8') as csvfile:
+    reader = csv.DictReader(csvfile)
+    for row in reader:
+        data.append({
+            "state": row['State'],
+            "capital": row['Capital'],
+            "latitude": float(row['latitude']),
+            "longitude": float(row['longitude'])
+        })
+
+with open(output_file, 'w', encoding='utf-8') as jsonfile:
+    json.dump(data, jsonfile, ensure_ascii=False, indent=2)
+
+print(f"Generated JSON file '{output_file}' with {len(data)} entries (state, capital, latitude, longitude).")
